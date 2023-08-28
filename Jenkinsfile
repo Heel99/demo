@@ -42,7 +42,9 @@ pipeline {
 
     post {
         always {
+          node{
             cleanWs()
+           }
         }
     }
 }
