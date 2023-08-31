@@ -3,8 +3,6 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
-        AWS_ACCESS_KEY_ID = credentials('AKIA5IHLUIJ3PW3WKOQZ')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
         S3_BUCKET_NAME = 'angularbucket12'
     }
 
