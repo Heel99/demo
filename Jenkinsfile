@@ -7,25 +7,18 @@ pipeline {
                 checkout scm
             }
         }
-        
-        stage('Build') {
+
+        stage('Build and Test') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
-            }
-        }
-
-        stage('Test') {
-            steps {
                 sh 'npm test'
             }
         }
 
-        stage('Deploy to S3') {
+        stage('Publish to S3') {
             steps {
-                withAWS(credentials: 'your-aws-credentials-id', region: 'us-east-1') {
-                    sh 'aws s3 sync dist/ s3://your-s3-bucket-name'
-                }
+                s3Upload(path: 'dist/*', bucket: 'angularbuc', archive: false)
             }
         }
     }
