@@ -1,46 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_DEFAULT_REGION = 'us-east-1'
-        S3_BUCKET_NAME = 'angularbucket12'
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
+        
         stage('Build') {
             steps {
-                script {
-                    sh 'npm install'
-                    sh 'ng build --prod'
-                }
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
 
-        stage('Upload to S3') {
+        stage('Test') {
             steps {
-                script {
-                    def awsS3 = [:]
-                    awsS3['AWS_REGION'] = AWS_DEFAULT_REGION
-                    awsS3['AWS_ACCESS_KEY_ID'] = AWS_ACCESS_KEY_ID
-                    awsS3['AWS_SECRET_ACCESS_KEY'] = AWS_SECRET_ACCESS_KEY
-
-                    withAWS(credentials: awsS3, region: awsS3['AWS_REGION']) {
-                        sh "aws s3 sync dist/ s3://${S3_BUCKET_NAME}/"
-                    }
-                }
+                sh 'npm test'
             }
         }
-    }
 
-    post {
-        always {
-            cleanWs()
+        stage('Deploy to S3') {
+            steps {
+                withAWS(credentials: 'your-aws-credentials-id', region: 'us-east-1') {
+                    sh 'aws s3 sync dist/ s3://your-s3-bucket-name'
+                }
+            }
         }
     }
 }
