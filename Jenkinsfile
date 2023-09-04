@@ -1,5 +1,8 @@
 pipeline {
     agent any
+   tools {
+        nodejs '20.5.1'
+    }
 
     stages {
         stage('Checkout') {
@@ -17,9 +20,9 @@ pipeline {
         }
 
        stage('Publish to S3') {
-    steps {
-        sh 'aws s3 cp dist/* s3://bucketmul/ --recursive'
-    }
-    }
+          steps {
+              sh 'aws s3 cp dist/* s3://bucketmul/ --recursive'
+              }
+          }
     }
 }
