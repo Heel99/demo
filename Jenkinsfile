@@ -16,10 +16,10 @@ pipeline {
             }
         }
 
-        stage('Publish to S3') {
-            steps {
-                s3Upload(entries: ['dist/*'], bucket: 'bucketmul', doNotArchiveArtifacts: false)
-            }
-        }
+       stage('Publish to S3') {
+    steps {
+        sh 'aws s3 cp dist/* s3://bucketmul/ --recursive'
+    }
+    }
     }
 }
