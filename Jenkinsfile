@@ -18,7 +18,7 @@ pipeline {
 
         stage('Publish to S3') {
             steps {
-                s3Upload(path: 'dist/*', bucket: 'angularbuc', archive: false)
+                s3Upload(path: 'dist/*', bucket: 'bucketmul', archive: false)
             }
         }
     }
