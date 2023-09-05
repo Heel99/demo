@@ -1,28 +1,49 @@
 pipeline {
     agent any
-   tools {
-        nodejs 'nodejs'
+    
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('AKIAYBNQXIQPMD4KNOMX')
+        AWS_SECRET_ACCESS_KEY = credentials('m4jkqW47OwyHA9hcToiv+HgqnNwOjb9/d1gkznjj') 
+        S3_BUCKET_NAME = 'bucketmul' 
+        PROJECT_DIR = 'path/to/your/project' // Replace with the actual path to your project
+        DIST_DIR = 'dist' // Replace with the directory containing your distribution files
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git clone
+                git clone https://github.com/Heel99/demo
+                  
             }
         }
 
-        stage('Build and Test') {
+        stage('Build Project') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
-                sh 'npm test'
+                // Build your project distribution
+                sh "cd ${PROJECT_DIR} && npm install && npm run build" 
             }
         }
 
-       stage('Publish to S3') {
-          steps {
-              sh 'aws s3 cp dist/* s3://bucketmul/ --recursive'
-              }
-          }
+        stage('Upload to S3') {
+            steps {
+                script {
+                    sh 'curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"'
+                    sh 'unzip awscliv2.zip'
+                    sh './aws/install'
+
+                    
+                    sh "aws s3 cp ${PROJECT_DIR}/${DIST_DIR} s3://${S3_BUCKET_NAME}/${DIST_DIR} --recursive"
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and upload to S3 succeeded.'
+        }
+        failure {
+            echo 'Build or upload to S3 failed.'
+        }
     }
 }
