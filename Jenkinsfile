@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git clone https://github.com/Heel99/demo.git
+                git clone url: 'https://github.com/Heel99/demo.git'
                   
             }
         }
