@@ -5,7 +5,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AKIAYBNQXIQPMD4KNOMX')
         AWS_SECRET_ACCESS_KEY = credentials('m4jkqW47OwyHA9hcToiv+HgqnNwOjb9/d1gkznjj') 
         S3_BUCKET_NAME = 'bucketmul' 
-        PROJECT_DIR = 'path/to/your/project' // Replace with the actual path to your project
+        PROJECT_DIR = '/demo' // Replace with the actual path to your project
         DIST_DIR = 'dist' // Replace with the directory containing your distribution files
     }
 
@@ -20,7 +20,7 @@ pipeline {
         stage('Build Project') {
             steps {
                 // Build your project distribution
-                sh "cd ${PROJECT_DIR} && npm install && npm run build" 
+                sh "cd ${PROJECT_DIR} && npm i @angular/cli@13.2.1 && npm run build" 
             }
         }
 
