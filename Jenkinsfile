@@ -1,11 +1,5 @@
 pipeline {
     agent any
-    
-    environment {
-        AWS_ACCESS_KEY_ID =('AKIAYBNQXIQPISFMBGGH')
-        AWS_SECRET_ACCESS_KEY = ('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') 
-        S3_BUCKET_NAME = 'bucketmul' 
-    }
 
     stages {
        
@@ -20,7 +14,7 @@ pipeline {
             steps {
                 script {
                 
-                    sh "aws s3 cp ${PROJECT_DIR}/${DIST_DIR} s3://${S3_BUCKET_NAME}/${DIST_DIR} --recursive"
+                    sh "aws s3 cp dist/ s3://bucketmul/dist/ "
                 }
             }
         }
