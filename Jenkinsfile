@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAYBNQXIQPMD4KNOMX')
-        AWS_SECRET_ACCESS_KEY = credentials('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') 
+        AWS_ACCESS_KEY_ID = credentials('AKIAYBNQXIQPISFMBGGH')
+        AWS_SECRET_ACCESS_KEY = credentials('67Z5uTTZ19vwvN6o+27qHhYP9D9elHUsi+76DgNh') 
         S3_BUCKET_NAME = 'bucketmul' 
         PROJECT_DIR = '/demo' // Replace with the actual path to your project
         DIST_DIR = 'dist' // Replace with the directory containing your distribution files
